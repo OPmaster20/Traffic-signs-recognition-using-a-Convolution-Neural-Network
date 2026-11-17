@@ -1,5 +1,4 @@
-
-
+# all labels
 class_labels = {
     0:  "Speed limit (20km/h)",
     1:  "Speed limit (30km/h)",

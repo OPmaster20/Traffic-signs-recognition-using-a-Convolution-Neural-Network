@@ -4,9 +4,9 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
-
 import dmg
 from model.ResNet18 import ResNet,BasicBlock
+
 from sklearn.metrics import classification_report
 import os
 import pandas as pd
@@ -31,7 +31,11 @@ def train():
     # Image Preprocessing
     transform = transforms.Compose([
         # resize images
-        transforms.Resize((224, 224)),
+        transforms.Resize((64, 64)),
+        # rotation 15 degree
+        transforms.RandomRotation(15),
+        # Randomly adjust the brightness and contrast to simulate different lighting conditions
+        transforms.ColorJitter(brightness=0.2, contrast=0.2),
         # transfer to tensor
         transforms.ToTensor(),
         # Feature scaling
@@ -57,6 +61,10 @@ def train():
     # update parameters
     optimizer = optim.Adam(model.parameters(), lr=1e-3)
 
+    # record loss
+    epoch_losses = []
+    epoch_accs = []
+
     model.train()
 
     # mini batch
@@ -77,22 +85,25 @@ def train():
             optimizer.step()
 
             running_loss += loss.item()
-        print(
-            f"Epoch {epoch + 1}, "
-            f"Loss={running_loss / len(train_loader):.4f}"
-        )
 
-        _, predicted = torch.max(outputs, 1)
-        total += labels.size(0)
-        correct += (predicted == labels).sum().item()
+            _, predicted = torch.max(outputs, 1)
+            total += labels.size(0)
+            correct += (predicted == labels).sum().item()
 
-    acc = 100 * correct / total
+        avg_loss = running_loss / len(train_loader)
+        acc = 100 * correct / total
 
-    print(f"Train set - Acc={acc:.2f}%")
+        epoch_losses.append(avg_loss)
+        epoch_accs.append(acc)
+
+        print(f"Epoch {epoch + 1}/{epochs}, Loss={avg_loss:.4f}, Acc={acc:.2f}%")
+
+    print(f"Final Train Acc={acc:.2f}%")
+    dmg.plot_metrics(epoch_losses, epoch_accs)
 
 
 if __name__ == "__main__":
-     dmg.img_dataset()
-    #DI().show_random_images()
+     #dmg.img_dataset()
+     #DI().show_random_images()
      train()
-    #download()
+     #download()

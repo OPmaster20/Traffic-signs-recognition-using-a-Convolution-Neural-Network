@@ -1,4 +1,8 @@
 import os
+
+from matplotlib import pyplot as plt
+
+
 # this pages for count images
 
 
@@ -52,3 +56,32 @@ def percentage(train_num, test_num):
 
     print(f"Train: {train_percent:.2f}%")
     print(f"Test : {test_percent:.2f}%")
+
+# Manually draw the convergence curve
+def plot_metrics(losses, accs):
+    epochs = range(1, len(losses) + 1)
+
+    plt.figure(figsize=(12, 5))
+
+    # Draw the Loss curve (left figure)
+    plt.subplot(1, 2, 1)
+    plt.plot(epochs, losses, 'b-o', label='Training Loss')
+    plt.title('Training Loss over Epochs')
+    plt.xlabel('Epochs')
+    plt.ylabel('Loss')
+    plt.grid(True)
+    plt.legend()
+
+    # Draw the Accuracy curve (as shown in the right figure)
+    plt.subplot(1, 2, 2)
+    plt.plot(epochs, accs, 'r-o', label='Training Accuracy')
+    plt.title('Training Accuracy over Epochs')
+    plt.xlabel('Epochs')
+    plt.ylabel('Accuracy (%)')
+    plt.grid(True)
+    plt.legend()
+
+    # Adjust the layout and display
+    plt.tight_layout()
+    plt.savefig('training_metrics.png')
+    plt.show()

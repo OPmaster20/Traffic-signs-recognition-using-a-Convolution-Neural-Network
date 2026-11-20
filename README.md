@@ -8,6 +8,10 @@
 | `dmg/`    | Displays images from the dataset for inspection and visualization. |
 | `app.py`  | Graphical user interface (GUI) that makes it easy to test the model interactively. |
 | `main.py` | Main script used for training the ResNet18 model on the German traffic sign dataset. |
+| `infer.py` | Model inference |
+| `test.py` | Evaluate the model on the test set |
+| `labels.py` | Training set true labels |
+| `predictor.py` | The model inference file connected to the GUI |
 
 ---
 

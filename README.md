@@ -21,6 +21,7 @@
 - **Architecture:** ResNet18
 - **Framework:** PyTorch
 - **Training environment:** CUDA
+- **Training configuration:** RTX 5070 laptop - 8GB
 
 ## Dataset
 

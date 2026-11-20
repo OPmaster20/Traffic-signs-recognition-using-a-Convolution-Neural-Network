@@ -83,5 +83,5 @@ def plot_metrics(losses, accs):
 
     # Adjust the layout and display
     plt.tight_layout()
-    plt.savefig('training_metrics.png')
+    plt.savefig('result/training_metrics.png')
     plt.show()

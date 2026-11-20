@@ -38,3 +38,33 @@ Use the scripts in `dmg/` to display sample images from the dataset and informat
 
 ```bash
 python main.py
+```
+
+### 4. Evaluate the model on the test set
+```bash
+python test.py
+```
+### 5. Model inference
+Manual model inference
+```bash
+# Interactive manual input of image path
+python infer.py
+# Direct parameter passing for inference of a single image
+python infer.py gtsrb/Test/00000.png --top-k 5 --threshold 0.3
+```
+Based on GUI
+```bash
+python app.py
+```
+Before test install GUI
+
+    pip install nicegui
+
+Destination address
+
+    http://localhost:8080
+
+
+![User interface](dmg/GUI.png)
+
+

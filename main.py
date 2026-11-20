@@ -5,8 +5,9 @@ import torch.optim as optim
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 import dmg
+import predictor
 from model.ResNet18 import ResNet,BasicBlock
-
+from labels import class_labels as cls
 from sklearn.metrics import classification_report
 import os
 import pandas as pd
@@ -27,15 +28,15 @@ def train():
     # Cuda loading (training on the GPU)
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     # training times
-    epochs = 5
+    epochs = 10
     # Image Preprocessing
     transform = transforms.Compose([
         # resize images
         transforms.Resize((64, 64)),
         # rotation 15 degree
-        transforms.RandomRotation(15),
+        #transforms.RandomRotation(15),
         # Randomly adjust the brightness and contrast to simulate different lighting conditions
-        transforms.ColorJitter(brightness=0.2, contrast=0.2),
+        #transforms.ColorJitter(brightness=0.2, contrast=0.2),
         # transfer to tensor
         transforms.ToTensor(),
         # Feature scaling
@@ -100,6 +101,16 @@ def train():
 
     print(f"Final Train Acc={acc:.2f}%")
     dmg.plot_metrics(epoch_losses, epoch_accs)
+
+    torch.save({
+        "model_state_dict": model.state_dict(),
+        "class_labels": cls,
+        "num_classes": 43,
+        "input_size": 64,
+        "normalize_mean": [0.485, 0.456, 0.406],
+        "normalize_std": [0.229, 0.224, 0.225],
+    }, "gtsrb_resnet18.pth")
+    print("Model saved to gtsrb_resnet18.pth")
 
 
 if __name__ == "__main__":

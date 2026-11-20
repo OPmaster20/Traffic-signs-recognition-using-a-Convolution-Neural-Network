@@ -6,6 +6,7 @@
 | `gpu/`    | Checks whether a CUDA-capable GPU is available locally, and handles device setup (CPU/GPU). |
 | `model/`  | Stores model files such as trained weights and checkpoints. |
 | `dmg/`    | Displays images from the dataset for inspection and visualization. |
+| `result/` | Store experimental indicators |
 | `app.py`  | Graphical user interface (GUI) that makes it easy to test the model interactively. |
 | `main.py` | Main script used for training the ResNet18 model on the German traffic sign dataset. |
 | `infer.py` | Model inference |
